@@ -1,0 +1,143 @@
+---
+title: "The net/http package in Go: Clients"
+date: 2021-12-01T16:27:54+01:00
+author: "Leander Steiner"
+draft: false
+hideReadMore: true
+---
+
+# net/http - Clients
+
+The ```net/http``` package offers simple but powerful abstractions around http tasks.
+
+## Clients
+
+### Creating a Client
+
+Instead of using the default client with ```http.Get()``` we create our own so we can sepcify out timeout.
+
+```go
+client := &http.Client {
+    Timout: 5 * time.Second
+}
+```
+
+
+
+### Creating a Request
+
+We create a new ```*http.Request``` a pointer to a request object which we will pass to out client for execution.
+The context we pass is an empty context that has no timeout. 
+We also specify the http method we want to use and could provide a body as the last argument.
+
+```go
+const url = "https://jsonplaceholder.typicode.com/todos/1"
+req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
+if err != nil {
+	panic(err)
+}
+```
+
+### Executing the Request
+
+Now we can execute out request using our created client.
+We have to make sure that we defer the closing of the responses body which is a ```io.ReadCloser```.
+
+```go
+res, err := client.Do(req)
+if err != nil {
+	panic(err)
+}
+defer res.Body.Close()
+
+if res.StatusCode != http.StatusOK {
+	panic("unexpected status")
+}
+```
+
+We now have access to a couple of fields on the response object(```*http.Response```)
+
+- ```res.StatusCode``` -> numeric response status
+- ```res.Status``` -> textual response status
+- ```res.Header``` -> response headers (```type Header map[string][]string```)
+- ```res.Body``` -> the ```io.ReadCloser``` to read the response data from
+
+### Reading the Response Data
+
+We can now create a new struct that will hold the response data.
+To achieve this we will first create a new anonymous struct that corresponds to the json we receive back as the response.
+
+```go
+var data struct {
+	UserID    int    `json:"userId"`
+	ID        int    `json:"id"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
+}
+```
+
+Now all we have to do is fill out struct with the response data.
+
+```go
+err = json.NewDecoder(res.Body).Decode(&data)
+if err != nil {
+	panic(err)
+}
+
+fmt.Printf("%+v\n", data)
+```
+
+Output:
+```
+{UserID:1 ID:1 Title:delectus aut autem Completed:false}
+```
+
+### Full code listing
+
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"time"
+)
+
+func main() {
+	client := &http.Client{
+		Timeout: 5 * time.Second,
+	}
+
+	const url = "https://jsonplaceholder.typicode.com/todos/1"
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		panic("unexpected status")
+	}
+
+	var data struct {
+		UserID    int    `json:"userId"`
+		ID        int    `json:"id"`
+		Title     string `json:"title"`
+		Completed bool   `json:"completed"`
+	}
+
+	err = json.NewDecoder(res.Body).Decode(&data)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%+v\n", data)
+}
+```
