@@ -60,3 +60,7 @@ paginate = 5
         identifier = "archive"
         name = "Archive"
         url = "/archive"
+      [[languages.en.menu.main]]
+        identifier = "imprint"
+        name = "Imprint"
+        url = "/imprint"
