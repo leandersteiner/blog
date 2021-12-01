@@ -3,7 +3,7 @@ title: "The net/http package in Go: Clients"
 date: 2021-12-01T16:27:54+01:00
 author: "Leander Steiner"
 draft: false
-hideReadMore: true
+description: "Taking a look at http clients in Go using the net/http package"
 ---
 
 # net/http - Clients
@@ -16,12 +16,11 @@ The ```net/http``` package offers simple but powerful abstractions around http t
 
 Instead of using the default client with ```http.Get()``` we create our own so we can sepcify out timeout.
 
-```go
+{{< code language="go" title="Creating a client" id="1" expand="Show" collapse="Hide" isCollapsed="false" >}}
 client := &http.Client {
     Timout: 5 * time.Second
 }
-```
-
+{{< /code >}}
 
 
 ### Creating a Request
@@ -30,20 +29,20 @@ We create a new ```*http.Request``` a pointer to a request object which we will 
 The context we pass is an empty context that has no timeout. 
 We also specify the http method we want to use and could provide a body as the last argument.
 
-```go
+{{< code language="go" title="Creating a request" id="2" expand="Show" collapse="Hide" isCollapsed="false" >}}
 const url = "https://jsonplaceholder.typicode.com/todos/1"
 req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
 if err != nil {
 	panic(err)
 }
-```
+{{< /code >}}
 
 ### Executing the Request
 
 Now we can execute out request using our created client.
 We have to make sure that we defer the closing of the responses body which is a ```io.ReadCloser```.
 
-```go
+{{< code language="go" title="Executing the request" id="3" expand="Show" collapse="Hide" isCollapsed="false" >}}
 res, err := client.Do(req)
 if err != nil {
 	panic(err)
@@ -53,7 +52,7 @@ defer res.Body.Close()
 if res.StatusCode != http.StatusOK {
 	panic("unexpected status")
 }
-```
+{{< /code >}}
 
 We now have access to a couple of fields on the response object(```*http.Response```)
 
@@ -67,25 +66,26 @@ We now have access to a couple of fields on the response object(```*http.Respons
 We can now create a new struct that will hold the response data.
 To achieve this we will first create a new anonymous struct that corresponds to the json we receive back as the response.
 
-```go
+{{< code language="go" title="Creating a struct to hold the data" id="4" expand="Show" collapse="Hide" isCollapsed="false" >}}
 var data struct {
 	UserID    int    `json:"userId"`
 	ID        int    `json:"id"`
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
 }
-```
+{{< /code >}}
 
 Now all we have to do is fill out struct with the response data.
 
-```go
+{{< code language="go" title="Fill the struct with response data" id="5" expand="Show" collapse="Hide" isCollapsed="false" >}}
 err = json.NewDecoder(res.Body).Decode(&data)
 if err != nil {
 	panic(err)
 }
 
 fmt.Printf("%+v\n", data)
-```
+{{< /code >}}
+
 
 Output:
 ```
@@ -94,7 +94,7 @@ Output:
 
 ### Full code listing
 
-```go
+{{< code language="go" title="Full code" id="6" expand="Show" collapse="Hide" isCollapsed="false" >}}
 package main
 
 import (
@@ -140,4 +140,4 @@ func main() {
 
 	fmt.Printf("%+v\n", data)
 }
-```
+{{< /code >}}
