@@ -14,7 +14,7 @@ The ```net/http``` package offers simple but powerful abstractions around http t
 
 ### Creating a Client
 
-Instead of using the default client with ```http.Get()``` we create our own so we can sepcify out timeout.
+Instead of using the default client with ```http.Get()``` we create our own so we can sepcify our timeout.
 
 {{< code language="go" title="Creating a client" id="1" expand="Show" collapse="Hide" isCollapsed="false" >}}
 client := &http.Client {
@@ -25,7 +25,7 @@ client := &http.Client {
 
 ### Creating a Request
 
-We create a new ```*http.Request``` a pointer to a request object which we will pass to out client for execution.
+We create a new ```*http.Request``` a pointer to a request object which we will pass to our client for execution.
 The context we pass is an empty context that has no timeout. 
 We also specify the http method we want to use and could provide a body as the last argument.
 
@@ -39,7 +39,7 @@ if err != nil {
 
 ### Executing the Request
 
-Now we can execute out request using our created client.
+Now we can execute the request using our client.
 We have to make sure that we defer the closing of the responses body which is a ```io.ReadCloser```.
 
 {{< code language="go" title="Executing the request" id="3" expand="Show" collapse="Hide" isCollapsed="false" >}}
@@ -75,7 +75,7 @@ var data struct {
 }
 {{< /code >}}
 
-Now all we have to do is fill out struct with the response data.
+Now all we have to do is fill the struct with the response data.
 
 {{< code language="go" title="Fill the struct with response data" id="5" expand="Show" collapse="Hide" isCollapsed="false" >}}
 err = json.NewDecoder(res.Body).Decode(&data)
