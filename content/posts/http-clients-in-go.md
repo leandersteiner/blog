@@ -1,6 +1,6 @@
 ---
-title: "The net/http package in Go: Clients"
-date: 2021-12-01T16:27:54+01:00
+title: "Basic HTTP Clients in Go (net/http)"
+date: 2021-12-01
 author: "Leander Steiner"
 draft: false
 description: "Taking a look at http clients in Go using the net/http package"
