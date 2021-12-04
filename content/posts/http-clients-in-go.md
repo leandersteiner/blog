@@ -14,11 +14,11 @@ The ```net/http``` package offers simple but powerful abstractions around http t
 
 ### Creating a Client
 
-Instead of using the default client with ```http.Get()``` we create our own so we can sepcify our timeout.
+Instead of using the default client with ```http.Get()``` we create our own so we can specify our timeout.
 
 {{< code language="go" title="Creating a client" id="1" expand="Show" collapse="Hide" isCollapsed="false" >}}
 client := &http.Client {
-    Timout: 5 * time.Second
+    Timeout: 5 * time.Second
 }
 {{< /code >}}
 

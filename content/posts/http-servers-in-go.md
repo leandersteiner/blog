@@ -14,7 +14,7 @@ The ```net/http``` package offers simple but powerful abstractions around http t
 
 ### Creating a Server
 
-Instead of using the default server with ```http.HandleFunc(string, func(http.ResponseWriter, *http.Request))``` we create our own so we can sepcify our timeout.
+Instead of using the default server with ```http.HandleFunc(string, func(http.ResponseWriter, *http.Request))``` we create our own so we can specify our timeout.
 
 {{< code language="go" title="Creating a server" id="server" expand="Show" collapse="Hide" isCollapsed="false" >}}
 s := http.Server{
@@ -30,7 +30,7 @@ s := http.Server{
 
 ### Creating a Handler
 
-Now that we have a Server, we want it to respons to incoming HTTP requests. We already saw that we can provide a handler when creating a new server. You can give it any type that implements the ```http.Handler``` interface.
+Now that we have a Server, we want it to respond to incoming HTTP requests. We already saw that we can provide a handler when creating a new server. You can give it any type that implements the ```http.Handler``` interface.
 
 {{< code language="go" title="The Handler interface" id="handler" expand="Show" collapse="Hide" isCollapsed="false" >}}
 type Handler interface {
