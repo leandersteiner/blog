@@ -1,7 +1,5 @@
 ---
-title: "About"
-date: 2021-09-01T08:13:30+02:00
-author: "Leander Steiner"
+toc: false
 ---
 
 # Hi there
