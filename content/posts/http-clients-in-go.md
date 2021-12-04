@@ -23,15 +23,31 @@ client := &http.Client {
 {{< /code >}}
 
 
-### Creating a Request
+### Creating a GET Request
 
 We create a new ```*http.Request``` a pointer to a request object which we will pass to our client for execution.
 The context we pass is an empty context that has no timeout. 
-We also specify the http method we want to use and could provide a body as the last argument.
+We also specify the http method as ```http.MethodGet```.
 
 {{< code language="go" title="Creating a request" id="2" expand="Show" collapse="Hide" isCollapsed="false" >}}
 const url = "https://jsonplaceholder.typicode.com/todos/1"
 req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
+if err != nil {
+	panic(err)
+}
+{{< /code >}}
+
+### Creating a POST Request
+
+We create a new ```*http.Request``` a pointer to a request object which we will pass to our client for execution.
+The context we pass is an empty context that has no timeout. 
+We also specify the http method as ```http.MethodPost``` and pass our request body as the last argument(```io.Reader```). 
+
+{{< code language="go" title="Creating a request" id="2" expand="Show" collapse="Hide" isCollapsed="false" >}}
+jsonStr := []byte(`{"username":"newuser", "password":"password"}`)
+const url = "http://our-backend.com/api/v1/users"
+req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, url, bytes.NewBuffer(jsonStr))
+req.Header.Set("Content-Type", "application/json")
 if err != nil {
 	panic(err)
 }
