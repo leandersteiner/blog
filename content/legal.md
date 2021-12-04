@@ -4,7 +4,6 @@ toc: false
 ---
 
 ## Angaben gemäß § 5 TMG
-
 - Leander Steiner
 - Ascher Str. 5
 - 95111 Rehau

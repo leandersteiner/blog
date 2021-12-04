@@ -1,7 +1,6 @@
 ---
+title: "About me"
 toc: false
 ---
 
-# Hi there
-
-My name is Leander and I'm a Computer Science student at [Hof University](https://www.hof-university.com/).
+My name is Leander, I am a Computer Science student at [Hof University](https://www.hof-university.com/).
