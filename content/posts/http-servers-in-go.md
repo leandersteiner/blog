@@ -142,7 +142,7 @@ func main() {
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 15 * time.Second,
 		IdleTimeout:  30 * time.Second,
-		Handler:      HealthHandler{},
+		Handler:      mux,
 	}
 	err := s.ListenAndServe()
 	if err != nil {
