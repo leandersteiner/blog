@@ -2,7 +2,7 @@
 title: 'Building APIs with Express, MongoDB & Typescript'
 date: 2022-05-15
 author: 'Leander Steiner'
-draft: false
+draft: true
 description: 'Using typescript in combination with the express web framework to build apis storing data in mongodb'
 ---
 
