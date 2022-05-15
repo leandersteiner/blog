@@ -110,4 +110,4 @@ A movie will consist of a title and a release year, the reviews will belong to a
 
 ### Folder structure
 
-![test](folders.png)
+![test](img/folders.png)
